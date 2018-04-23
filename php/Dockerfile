@@ -4,14 +4,14 @@ MAINTAINER Dave Lane <dave@davelane.nz> (@lightweight) https://davelane.nz
 
 # Install PHP extensions
 RUN apt-get update && apt-get install -y apt-utils git less libbz2-dev libc-client-dev \
-    libcurl4-gnutls-dev libicu-dev libkrb5-dev libmcrypt-dev libpng-dev \
+    libcurl4-gnutls-dev libicu-dev libkrb5-dev libpng-dev \
     libpspell-dev libssl-dev libxml2-dev mariadb-client telnet unzip zip
 RUN apt-get install -y net-tools vim dnsutils
 # install cron and msmtp for outgoing email
 RUN apt-get install -y cron msmtp
 RUN rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-configure imap --with-imap --with-imap-ssl --with-kerberos
-RUN docker-php-ext-install bz2 curl gd imap intl mbstring mcrypt mysqli \
+RUN docker-php-ext-install bz2 curl gd imap intl mbstring mysqli \
     opcache pdo pdo_mysql pspell soap xmlrpc zip
 
 RUN set -ex && cd /usr/local/etc && { \

@@ -1,4 +1,4 @@
-FROM kiwilightweight/php-fpm53
+FROM kiwilightweight/php-fpm7
 MAINTAINER Dave Lane <dave@davelane.nz> (@lightweight) https://davelane.nz
 
 # cron is already installed in the base image

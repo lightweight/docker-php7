@@ -1,1 +1,1 @@
-docker build -t kiwilightweight/php53-fpm-jessie .
+docker build -t kiwilightweight/php-fpm7 .
