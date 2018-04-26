@@ -1,0 +1,51 @@
+version: "3"
+services:
+    app:
+        image: kiwilightweight/php-fpm7
+        volumes:
+            - [/path/to/your/app]:/var/www/html
+        environment:
+            - SMTP_HOST=[host]
+            - SMTP_PORT=587
+            - SMTP_REPLYTO_EMAIL=[replyto email address]
+            - SMTP_AUTH_USER=[email user]
+            - SMTP_AUTH_PASSWORD=[email password]
+        restart: unless-stopped
+        networks:
+            default:
+                aliases:
+                    - [your domain]
+    cron:
+        image: kiwilightweight/php-fpm7-cron
+        links:
+            - app
+        volumes:
+            - [/path/to/your/app]:/var/www/html
+        environment:
+            - SMTP_HOST=[host]
+            - SMTP_PORT=587
+            - SMTP_REPLYTO_EMAIL=[replyto email address]
+            - SMTP_AUTH_USER=[email user]
+            - SMTP_AUTH_PASSWORD=[email password]
+        restart: unless-stopped
+        networks:
+            default:
+                aliases:
+                    - cron.[your domain]
+    nginx:
+        image: oeru/nginx-jessie
+        links:
+            - app
+        ports:
+            - "127.0.0.1:8084:80"
+        volumes:
+            - ./nginx/conf.d:/etc/nginx/conf.d
+            - ./nginx/includes:/etc/nginx/includes
+            - ./nginx/cache:/var/cache/nginx
+            - [/path/to/your/app]:/var/www/html
+        restart: unless-stopped
+        networks:
+            default:
+                aliases:
+                    - nginx.[your domain]
+
