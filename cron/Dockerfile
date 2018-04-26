@@ -11,7 +11,7 @@ RUN set -ex \
         echo 'DRUPAL=/var/www/html'; \
         echo 'OUT=/var/log/cron.log'; \
         echo '# Run cron every 5 minutes'; \
-        echo '*/5 * * * * root cd $DRUPAL && php /var/www/html/vendor/bin/drush.php cron >> $OUT'; \
+        echo '*/5 * * * * root cd $DRUPAL && php /var/www/html/vendor/drush/drush/drush.php cron >> $OUT'; \
         echo '# Just testing'; \
         echo '*/5 * * * * root echo "Running cron at $(date)" >> $OUT'; \
         echo '# empty line'; \
