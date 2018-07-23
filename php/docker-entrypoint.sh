@@ -75,11 +75,11 @@ if ! [ -f /usr/local/bin/composer ]; then
     mv composer.phar /usr/local/bin/composer
 fi
 
-# check if composer's already running on this system of containers... 
+# check if composer's already running on this system of containers...
 SEMAPH=composer-running
 
-if ! [ -f $SEMAPH ] ; then 
-        # create the semaphore file with the date in it... 
+if ! [ -f $SEMAPH ] ; then
+        # create the semaphore file with the date in it...
             date > $SEMAPH
 
     if ! [ -f vendor/autoload.php ]; then
@@ -95,9 +95,11 @@ if ! [ -f $SEMAPH ] ; then
     mkdir /var/www/.composer
     chown www-data:www-data /var/www/.composer
     cd /var/www/html
-    sudo -u www-data composer require drush/drush
+    # make sure this is limited to drush 8.x and not 9.x, which is munted.
+    sudo -u www-data composer require drush/drush:8.*
     chown -R www-data:www-data .
-    
+    ln -sf /var/www/html/vendor/bin/drush /usr/local/bin/drush
+
     #remove semaphore
     rm $SEMAPH
 else
